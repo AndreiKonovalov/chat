@@ -2,9 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Main</title>
 </head>
 <body>
+<!--<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>-->
+<div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Выйти"/>
+    </form>
+    <span><a href="/user">Список пользователей</a> </span>
+</div>
 <div>
     <form method="post">
         <label>
@@ -17,9 +24,9 @@
     </form>
 </div>
 <div>Список сообщений</div>
-<form method="post" action="filter">
+<form method="get" action="/main">
     <label>
-        <input type="text" name="filter"/>
+        <input type="text" name="filter" th:value="${filter}"/>
     </label>
     <button type="submit">Найти</button>
 </form>
@@ -27,6 +34,7 @@
     <b th:text="${message.getId()}"></b>
     <span th:text="${message.getText()}"></span>
     <i th:text="${message.getTag()}"></i>
+    <strong th:text="${message.authorName}"></strong>
 </div>
 </body>
 </html>
