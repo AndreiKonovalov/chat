@@ -1,0 +1,12 @@
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:insert="~{fragments/htmlhead}"/>
+<body>
+<th:block layout:replace="~{fragments/navbar}"/>
+<div class="container mt-5">
+    <th:block layout:fragment="content"/>
+</div>
+<th:block layout:replace="~{fragments/body_scripts :: body}"/>
+</body>
+</html>

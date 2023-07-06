@@ -1,40 +1,53 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Main</title>
-</head>
-<body>
-<!--<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>-->
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Выйти"/>
-    </form>
-    <span><a href="/user">Список пользователей</a> </span>
-</div>
-<div>
-    <form method="post">
-        <label>
-            <input type="text" name="text" placeholder="Введите сообщение"/>
-        </label>
-        <label>
-            <input type="text" name="tag" placeholder="Тэг"/>
-        </label>
-        <button type="submit">Добавить</button>
-    </form>
-</div>
-<div>Список сообщений</div>
-<form method="get" action="/main">
-    <label>
-        <input type="text" name="filter" th:value="${filter}"/>
-    </label>
-    <button type="submit">Найти</button>
-</form>
-<div th:each="message : ${messages}">
-    <b th:text="${message.getId()}"></b>
-    <span th:text="${message.getText()}"></span>
-    <i th:text="${message.getTag()}"></i>
-    <strong th:text="${message.authorName}"></strong>
-</div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <div class="form-row">
+        <form method="get" action="/main" class="form-inline">
+            <input class="form-control" type="text" name="filter" th:if="${filter != null}" th:value="${filter}"
+                   placeholder="Поиск по тэгу"/>
+            <button class="btn btn-primary ml-3" type="submit">Найти</button>
+        </form>
+    </div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Добавить сообщение
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="form-group mt-3">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" name="text" placeholder="Введите сообщение"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="tag" placeholder="Тэг"/>
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="customFile">
+                        <label class="custom-file-label" for="customFile">Выбрать файл</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-columns">
+        <div class="card my-3" style="width: 18rem;" th:each="message : ${messages}">
+            <div th:if="${#bools.isTrue(message.filename)}">
+                <img class="card-img-top" th:src="@{${'/img/' + message.getFilename()}}"/>
+            </div>
+            <div class="m-2">
+                <span th:text="${message.getText()}"></span>
+                <i th:text="${message.getTag()}"></i>
+            </div>
+            <div class="card-footer text-muted">
+                <span th:text="${message.authorName}"></span>
+            </div>
+        </div>
+    </div>
+</th:block>
 </html>

@@ -1,11 +1,8 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
-<head>
-    <title>Greeting</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<p th:text="'Привет, ' + user + '!'" />
-<a href="/main">Main page</a>
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <h5>Hello, guest!</h5>
+</th:block>
 </html>

@@ -1,22 +1,20 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>User Editor</title>
-</head>
-<body>
-Редактор пользователей
-<form action="/user" method="post">
-    <label>
-        <input type="text" name="userName" th:value="${user.getUsername()}">
-        <input type="text" name="userId" th:value="${user.getId()}">
-    </label>
-    <div th:each="role : ${roles}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="body">
+    Редактор пользователей
+    <form action="/user" method="post">
         <label>
-            <input th:type="checkbox" th:text="${role.name()}" th:checked="${user.getRoles().contains(role)} ? 'checked'">
+            <input type="text" name="username" th:value="${user.getUsername()}">
+            <input type="hidden" name="userId" th:value="${user.getId()}">
         </label>
-    </div>
-    <button type="submit">Save</button>
-</form>
-</body>
+        <div th:each="role : ${roles}">
+            <label>
+                <input th:type="checkbox" th:name="${role}" th:text="${role.name()}" th:checked="${user.getRoles().contains(role)} ? 'checked'">
+            </label>
+        </div>
+        <button type="submit">Save</button>
+    </form>
+</th:block>
 </html>

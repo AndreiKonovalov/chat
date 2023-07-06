@@ -16,7 +16,7 @@ public class RegistrationController {
 
     @Autowired
     UserRepository userRepository;
-    boolean flag = false;
+
 
     @GetMapping("/registration")
     public String registration(){
@@ -26,7 +26,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(User user, Model model){
         User userFromDb = userRepository.findByUsername(user.getUsername());
-
+        boolean flag;
         if (userFromDb != null){
             flag = true;
             model.addAttribute("message", flag);

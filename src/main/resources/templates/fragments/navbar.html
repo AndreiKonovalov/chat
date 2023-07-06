@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a class="navbar-brand" th:href="@{/}">Sweater</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/main}">Messages</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                <a class="nav-link" th:href="@{/user}">User List</a>
+            </li>
+        </ul>
+
+        <div class="navbar-text mr-3 align-baseline">
+            <span sec:authentication="name"></span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button class="btn btn-primary" type="submit">Выйти</button>
+        </form>
+    </div>
+</nav>
