@@ -3,7 +3,9 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-    Login page
+    <div th:if="${message}">
+        Пользователь существует!
+    </div>
     <div th:if="${param.error}" class="mb-3 mt-3">
         Invalid username and password.
     </div>
@@ -11,20 +13,8 @@
         You have been logged out.
     </div>
     <form th:action="@{/login}" method="post">
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> User Name: </label>
-            <div class="col-sm-6">
-                <input type="text" name="username" class="form-control-plaintext" placeholder="User Name"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Password: </label>
-            <div class="col-sm-6">
-                <input type="password" name="password" class="form-control-plaintext" placeholder="Password"/>
-            </div>
-        </div>
+        <div th:insert="~{fragments/login}"></div>
         <button class="btn btn-primary" type="submit">Войти</button>
     </form>
-    <a href="/registration">Добавить нового пользователя</a>
 </th:block>
 </html>

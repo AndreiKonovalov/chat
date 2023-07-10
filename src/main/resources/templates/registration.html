@@ -3,20 +3,14 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-  <div th:if="${message}">
-    Пользователь существует!
+  <div th:text="${message} ? 'Вы подтвердили регистрацию, спасибо!' : 'Код активации не найден!'">
   </div>
   <form th:action="@{/registration}" method="post">
+    <div th:insert="~{fragments/login}"></div>
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label"> User Name: </label>
+      <label class="col-sm-2 col-form-label"> Email: </label>
       <div class="col-sm-6">
-        <input type="text" name="username" class="form-control-plaintext" placeholder="User Name"/>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label"> Password: </label>
-      <div class="col-sm-6">
-        <input type="password" name="password" class="form-control-plaintext" placeholder="Password"/>
+        <input type="email" name="email" class="form-control-plaintext" placeholder="Email"/>
       </div>
     </div>
     <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
