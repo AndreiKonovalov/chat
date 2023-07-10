@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.konovalov.chat.model.Message;
 import ru.konovalov.chat.model.User;
 import ru.konovalov.chat.repository.MessageRepository;
+import ru.konovalov.chat.service.UserService;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +23,16 @@ import java.util.UUID;
 public class MainController {
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private UserService userService;
     @Value("${upload.path}")
     private String uploadPath;
 
     @GetMapping("/")
     public String greeting(Model model) {
-//        model.addAttribute("name", name);
+//        if(userService.getUser(user)){
+//            model.addAttribute("name", user.getUsername());
+//        }else model.addAttribute("name", "Guest");
         return "greeting";
     }
 

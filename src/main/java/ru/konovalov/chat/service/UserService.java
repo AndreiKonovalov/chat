@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import ru.konovalov.chat.config.EncoderConfig;
 import ru.konovalov.chat.model.Role;
 import ru.konovalov.chat.model.User;
 import ru.konovalov.chat.repository.UserRepository;
@@ -24,11 +25,15 @@ public class UserService implements UserDetailsService {
     private MailService mailService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private EncoderConfig encoderConfig;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
+    }
+    public boolean getUser(User user){
+        User userFromDb = userRepository.findByUsername(user.getUsername());
+        return userFromDb != null;
     }
 
     public boolean addUser(User user) {
@@ -39,7 +44,7 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(encoderConfig.getPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
 
         sendMessage(user);
@@ -86,7 +91,7 @@ public class UserService implements UserDetailsService {
             }
         }
         if (StringUtils.hasLength(password)){
-            user.setPassword(password);
+            user.setPassword(encoderConfig.getPasswordEncoder().encode(password));
         }
         userRepository.save(user);
 

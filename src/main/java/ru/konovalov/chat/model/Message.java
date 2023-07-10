@@ -1,9 +1,11 @@
 package ru.konovalov.chat.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
@@ -13,7 +15,8 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+@NotBlank(message = "Введите сообщение")
+@Length(max = 2048, message = "Слишком большой текст(более 2 кБ)")
     private String text;
 
     private String tag;
