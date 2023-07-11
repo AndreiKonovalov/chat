@@ -14,14 +14,28 @@
        aria-controls="collapseExample">
         Добавить сообщение
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse" th:classappend="${message != null} ? show : ''" id="collapseExample">
         <div class="form-group mt-3">
-            <form method="post" enctype="multipart/form-data">
+            <form th:action="@{/main}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" name="text" placeholder="Введите сообщение"/>
+                    <input type="text" name="text" placeholder="Введите сообщение"
+                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"
+                           th:value="${message != null} ? ${message.getText()} : ''"/>
+                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{text}">
+                        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
+                            Text Error
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="tag" placeholder="Тэг"/>
+                    <input type="text" name="tag" placeholder="Введите тэг"
+                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"
+                           th:value="${message != null} ? ${message.getTag()} : ''"/>
+                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{tag}">
+                        <div th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}">
+                            Tag Error
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-file">

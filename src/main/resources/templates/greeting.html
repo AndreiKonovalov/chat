@@ -1,10 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-<!--    <h5 th:text="${name}"></h5>-->
-<h3>Привет!</h3>
+    <h5 >Привет,
+        <span sec:authentication="name"></span>
+    </h5>
     <div class="my-3">
         <a href="/login">Войти</a>
     </div>

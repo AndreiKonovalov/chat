@@ -1,11 +1,14 @@
 package ru.konovalov.chat.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -19,10 +22,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Имя не может быть пустым")
     private String username;
+
+    @NotBlank(message = "Пароль не может быть пустым")
     private String password;
+
+    @Transient
+    @NotBlank(message = "Подтверждение пароля не может быть пустым")
+    private String password2;
+
     private boolean active;
+
+    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Email не корректен")
     private String email;
+
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

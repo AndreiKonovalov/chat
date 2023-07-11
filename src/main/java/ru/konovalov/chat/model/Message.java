@@ -15,10 +15,10 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-@NotBlank(message = "Введите сообщение")
-@Length(max = 2048, message = "Слишком большой текст(более 2 кБ)")
+    @NotBlank(message = "Вы не ввели сообщение!")
+    @Length(max = 2048, message = "Слишком большой текст(более 2 кБ)")
     private String text;
-
+    @Length(max = 255, message = "Слишком большой текст тэга")
     private String tag;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -26,15 +26,16 @@ public class Message {
 
     private String filename;
 
-    public Message(){
+    public Message() {
     }
 
-    public Message(String text, String tag, User user){
+    public Message(String text, String tag, User user) {
         this.author = user;
         this.text = text;
         this.tag = tag;
     }
-    public String getAuthorName(){
+
+    public String getAuthorName() {
 
         return author != null ? author.getUsername() : "<none>";
     }

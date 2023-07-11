@@ -3,9 +3,8 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-    <div th:if="${message}">
-        Пользователь существует!
-    </div>
+<!--    <div th:text="${message} ? 'Спасибо за активацию' : 'Код активации не найден'">-->
+<!--    </div>-->
     <div th:if="${param.error}" class="mb-3 mt-3">
         Invalid username and password.
     </div>
