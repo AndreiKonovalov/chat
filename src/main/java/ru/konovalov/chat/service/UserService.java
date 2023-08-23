@@ -29,7 +29,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if (user == null){
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+        return user;
     }
     public boolean getUser(User user){
         User userFromDb = userRepository.findByUsername(user.getUsername());
@@ -45,7 +50,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(encoderConfig.getPasswordEncoder().encode(user.getPassword()));
-//        userRepository.save(user);
+        userRepository.save(user);
 
         sendMessage(user);
 

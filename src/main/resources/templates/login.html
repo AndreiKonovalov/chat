@@ -3,13 +3,21 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-<!--    <div th:text="${message} ? 'Спасибо за активацию' : 'Код активации не найден'">-->
-<!--    </div>-->
-    <div th:if="${param.error}" class="mb-3 mt-3">
-        Invalid username and password.
+    <!--    <div th:if="${param.error} and ${session}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION']}">-->
+    <!--        <div class="alert alert-danger" role="alert">-->
+    <!--            Reason: <span th:text="${errorMsg}">Invalid input</span>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div th:if="${messageType}" class="alert" th:classappend="${messageType} ? 'alert-success' : 'alert-danger'"
+         role="alert">
+        <div th:if="${message} ? 'Спасибо за активацию, можете войти под своим логином!' : 'Код активации не найден'">
+        </div>
+    </div>
+    <div th:if="${param.error} and ${session}" class="alert alert-danger mb-3 mt-3" role="alert">
+        Не корректные логин или пароль.
     </div>
     <div th:if="${param.logout}" class="mb-3 mt-3">
-        You have been logged out.
+        Вы вышли.
     </div>
     <form th:action="@{/login}" method="post">
         <div th:insert="~{fragments/login}"></div>

@@ -8,17 +8,14 @@
         <div th:insert="~{fragments/login}"></div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Password2: </label>
+            <label class="col-sm-2 col-form-label"> Password: </label>
             <div class="col-sm-6">
-                <input type="text" name="password2" class="form-control" placeholder="Password2"
+                <input type="text" name="password2" class="form-control" placeholder="Подтвердите пароль"
                        th:classappend="${user != null} ? 'is-invalid' : ''"/>
-                <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{password2}">
-                    <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}">
-                        Password2 Error
-                    </div>
+                <div class="invalid-feedback" th:if="${password2Error}">
+                    Подтверждение пароля не может быть пустым
                 </div>
             </div>
-            <div style="color: red" th:if="${passwordError}">Пароли не совпадают</div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Email: </label>
@@ -28,12 +25,18 @@
                        th:value="${user != null} ? ${user.getEmail()} : ''"/>
                 <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{email}">
                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-                        Email Error
+                        Ошибка Email
                     </div>
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+        <form action="?" method="POST">
+            <div class="g-recaptcha" data-sitekey="6Lem_hgnAAAAAESw1URp-o_6NzxjfosvrJL--Fdo"></div>
+            <br/>
+            <input class="btn btn-primary" type="submit" value="Зарегистрироваться">
+            <div class="alert alert-danger" role="alert" th:if="${captchaError}">Fill captcha</div>
+        </form>
+<!--        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>-->
     </form>
 </th:block>
 </html>

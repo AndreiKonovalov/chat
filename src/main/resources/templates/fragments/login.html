@@ -6,7 +6,7 @@
                th:value="${user != null} ? ${user.getUsername()} : ''"/>
         <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{username}">
             <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-                Username Error
+                Ошибка имени пользователя
             </div>
         </div>
     </div>
@@ -18,8 +18,12 @@
                th:classappend="${user != null} ? 'is-invalid' : ''"/>
         <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{password}">
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-                Password Error
+                Ошибка пароля
+            </div>
+            <div th:if="${passwordError}">
+                Пароли не совпадают
             </div>
         </div>
+
     </div>
 </div>
